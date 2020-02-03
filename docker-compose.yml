@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  wordpress:
+    image: wordpress:5.3-php7.3-fpm
+    container_name: cms
+    restart: always
+    env_file: .env
+    labels:
+      - traefik.enable=false
+    volumes:
+      - wordpress:/var/www/html
+#      - ./wordpress/var/www/html/wp-content/themes/:/var/www/html/wp-content/themes/
+#      - ./wordpress/var/www/html/wp-content/plugins/:/var/www/html/wp-content/plugins/
+  server-wordpress:
+    image: nginx:1.17-alpine
+    container_name: server-cms 
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - wordpress:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+    labels:
+        - traefik.frontend.rule=Host:www.${DOMAIN}
+        - traefik.backend=website
+        - traefik.port=80
+volumes:
+  wordpress:

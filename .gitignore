@@ -1,0 +1,4 @@
+*.sql
+*.gz
+.env
+wp-content
