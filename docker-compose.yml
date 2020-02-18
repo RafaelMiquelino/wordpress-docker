@@ -20,7 +20,7 @@ services:
       - wordpress:/var/www/html
       - ./nginx:/etc/nginx/conf.d
     labels:
-        - traefik.frontend.rule=Host:www.${DOMAIN}
+        - traefik.frontend.rule=Host:www.${DOMAIN},${DOMAIN}
         - traefik.backend=website
         - traefik.port=80
 volumes:
